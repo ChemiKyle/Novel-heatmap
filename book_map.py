@@ -23,8 +23,17 @@ def make_bookmap(sentence):
 
     return book_map, longest_line
 
-# def pad_with_zeroes(book_map)
 
 book_map, longest_line = make_bookmap(test_sentence)
 
-print(book_map)
+def pad_with_zeroes(book_map, longest_line):
+    for line in book_map:
+        word_count = len(line)
+        if word_count < longest_line:
+            for i in range(longest_line - word_count):
+                line.append(0)
+
+pad_with_zeroes(book_map, longest_line)
+
+for sent in book_map:
+    print(sent)
