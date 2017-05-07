@@ -7,4 +7,5 @@ i.e.: "The quick brown fox jumped over the lazy dog" becomes [3 5 5 3 6 4 3 4 3]
 
 The image at the top was created from Isaac Asimov's _The Last Question_.
 
-To convert an `.epub` book to a `.txt` file, you can use Calibre's `ebook-convert` command. Works best with single chapters.
+To convert an `.epub` book to a `.txt` file, you can use Calibre's `ebook-convert` command.  
+Creating an image works best with single chapters.
