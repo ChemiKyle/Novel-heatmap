@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-def make_bookmap(sentence):
+def make_bookmap(book_text):
     book_map = []
     longest_line = 0
-    line_map = sentence.split('.')
+    line_map = book_text.split('.')
 
     for line in line_map[:-1]: # Skip the last entry since it's a space after the final period
         this_line_map = line.split(' ')
@@ -30,17 +30,20 @@ def pad_with_zeroes(book_map, longest_line):
             for i in range(longest_line - word_count):
                 line.append(0)
 
-def main():
-    book_name, ext = os.path.splitext('the_last_question.txt')
-    with open(book_name + ext, 'r') as f:
-        test_sentence = f.read()
-
-    book_map, longest_line = make_bookmap(test_sentence)
-    pad_with_zeroes(book_map, longest_line)
+def numpy_image_maker(book_map, book_name):
     a = np.asarray(book_map)
     a = np.transpose(a)
     plt.imshow(a, cmap='plasma' ,interpolation='nearest')
     plt.savefig(book_name + '_map_image.png', bbox_inches='tight')
+
+def main():
+    book_name, ext = os.path.splitext('the_last_question.txt')
+    with open(book_name + ext, 'r') as f:
+        book_text = f.read()
+
+    book_map, longest_line = make_bookmap(book_text)
+    pad_with_zeroes(book_map, longest_line)
+    numpy_image_maker(book_map, book_name)
 
 if __name__ == "__main__":
     main()
