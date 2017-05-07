@@ -6,7 +6,6 @@ def make_bookmap(book_text):
     book_map = []
     longest_line = 0
     line_map = re.split('[\.\?\!]', book_text)
-    print(line_map)
 
     for line in line_map[:-1]: # Skip the last entry since it's a space after the final period
         this_line_map = line.split(' ')
@@ -37,7 +36,7 @@ def numpy_image_maker(book_map, book_name):
     a = np.asarray(book_map)
     a = np.transpose(a)
     plt.axis('off')
-    cmap = 'rainbow'
+    cmap = 'viridis'
     plt.imshow(a, cmap=cmap ,interpolation='nearest')
     if directly_to_figure:
         plt.savefig(book_name + '_map_image.png', bbox_inches='tight')
@@ -61,8 +60,6 @@ def main():
 
     book_map, longest_line = make_bookmap(book_text)
     pad_with_zeroes(book_map, longest_line)
-
-    print(len(book_map))
 
     if make_image:
         numpy_image_maker(book_map, book_name)
