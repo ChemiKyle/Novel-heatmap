@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import os
+import os, tkinter
 
 def make_bookmap(book_text):
     book_map = []
     longest_line = 0
     line_map = book_text.split('.')
+
 
     for line in line_map[:-1]: # Skip the last entry since it's a space after the final period
         this_line_map = line.split(' ')
@@ -30,13 +31,18 @@ def pad_with_zeroes(book_map, longest_line):
             for i in range(longest_line - word_count):
                 line.append(0)
 
+directly_to_figure = False
+
 def numpy_image_maker(book_map, book_name):
     a = np.asarray(book_map)
     a = np.transpose(a)
     plt.axis('off')
-    plt.imshow(a, cmap='plasma' ,interpolation='nearest')
-    # plt.show()
-    plt.savefig(book_name + '_map_image.png', bbox_inches='tight')
+    cmap = 'viridis'
+    plt.imshow(a, cmap=cmap ,interpolation='nearest')
+    if directly_to_figure:
+        plt.savefig(book_name + '_map_image.png', bbox_inches='tight')
+    else:
+        plt.show()
 
 # Create a file with a matrix suitable for Octave/MATLAB
 def matrix_maker(book_map, book_name):
@@ -48,12 +54,15 @@ make_image = True
 make_matrix = False
 
 def main():
-    book_name, ext = os.path.splitext('the_last_question.txt')
-    with open(book_name + ext, 'r') as f:
+    chosen_file = tkinter.filedialog.askopenfilename()
+    book_name, ext = os.path.splitext(chosen_file)
+    with open(chosen_file, 'r') as f:
         book_text = f.read()
 
     book_map, longest_line = make_bookmap(book_text)
     pad_with_zeroes(book_map, longest_line)
+
+    print(len(book_map))
 
     if make_image:
         numpy_image_maker(book_map, book_name)
