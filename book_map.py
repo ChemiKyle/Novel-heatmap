@@ -30,8 +30,9 @@ def pad_with_zeroes(book_map, longest_line):
             for i in range(longest_line - word_count):
                 line.append(0)
 
-directly_to_figure = True
 
+make_image = True # Determines whether or not to plot the result
+directly_to_figure = True # Set to false to produce a preview first
 def numpy_image_maker(book_map, book_name):
     a = np.asarray(book_map)
     a = np.transpose(a)
@@ -44,16 +45,15 @@ def numpy_image_maker(book_map, book_name):
         plt.show()
 
 # Create a file with a matrix suitable for Octave/MATLAB
+make_matrix = False
 def matrix_maker(book_map, book_name):
     a = np.asarray(book_map)
     a = np.transpose(a)
     np.savetxt(book_name + ".mat", a, newline=";\n")
 
-make_image = True
-make_matrix = False
 
-def main():
-    chosen_file = tkinter.filedialog.askopenfilename()
+
+def turn_text_to_output(chosen_file):
     book_name, ext = os.path.splitext(chosen_file)
     with open(chosen_file, 'r') as f:
         book_text = f.read()
@@ -61,10 +61,18 @@ def main():
     book_map, longest_line = make_bookmap(book_text)
     pad_with_zeroes(book_map, longest_line)
 
+    print(len(book_map))
+
     if make_image:
         numpy_image_maker(book_map, book_name)
     if make_matrix:
         matrix_maker(book_map, book_name)
+
+def main():
+    file_list = tkinter.filedialog.askopenfilenames() # Supports processing multiple files sequentially
+
+    for chosen_file in file_list:
+        turn_text_to_output(chosen_file)
 
 
 if __name__ == "__main__":
