@@ -33,8 +33,19 @@ def pad_with_zeroes(book_map, longest_line):
 def numpy_image_maker(book_map, book_name):
     a = np.asarray(book_map)
     a = np.transpose(a)
+    plt.axis('off')
     plt.imshow(a, cmap='plasma' ,interpolation='nearest')
+    # plt.show()
     plt.savefig(book_name + '_map_image.png', bbox_inches='tight')
+
+# Create a file with a matrix suitable for Octave/MATLAB
+def matrix_maker(book_map, book_name):
+    a = np.asarray(book_map)
+    a = np.transpose(a)
+    np.savetxt(book_name + ".mat", a, newline=";\n")
+
+make_image = True
+make_matrix = False
 
 def main():
     book_name, ext = os.path.splitext('the_last_question.txt')
@@ -43,7 +54,12 @@ def main():
 
     book_map, longest_line = make_bookmap(book_text)
     pad_with_zeroes(book_map, longest_line)
-    numpy_image_maker(book_map, book_name)
+
+    if make_image:
+        numpy_image_maker(book_map, book_name)
+    if make_matrix:
+        matrix_maker(book_map, book_name)
+
 
 if __name__ == "__main__":
     main()
