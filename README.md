@@ -1,9 +1,9 @@
 ## Novel Heatmap  
-![light](/the_last_question_map_image.png?raw=true "Asimov's _The Last Question_")
+![light](/images/the_last_question_map_image.png?raw=true "Asimov's _The Last Question_")
 
 Creates a heatmap of the words in a book from a .txt file, image output looks somewhat like a skyline. This works by making a matrix of the number of characters in each words in a sentence; each sentence is a vector and each number corresponds to the length of the word at its corresponding position.  
 i.e.: "The quick brown fox jumped over the lazy dog" becomes [3 5 5 3 6 4 3 4 3] and is represented thusly  
-![fox](/fox_map_image.png?raw=true)
+![fox](/images/fox_map_image.png?raw=true)
 
 The image at the top was created from Isaac Asimov's _The Last Question_.
 
