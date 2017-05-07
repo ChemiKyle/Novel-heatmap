@@ -31,7 +31,7 @@ def pad_with_zeroes(book_map, longest_line):
             for i in range(longest_line - word_count):
                 line.append(0)
 
-directly_to_figure = False
+directly_to_figure = True
 
 def numpy_image_maker(book_map, book_name):
     a = np.asarray(book_map)
