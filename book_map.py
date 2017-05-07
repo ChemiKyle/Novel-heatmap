@@ -1,4 +1,5 @@
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 test_sentence = "This is a sentence. So is this one. This one's short. But this one is very long, the longest of them all."
 
@@ -35,5 +36,6 @@ def pad_with_zeroes(book_map, longest_line):
 
 pad_with_zeroes(book_map, longest_line)
 
-for sent in book_map:
-    print(sent)
+a = np.asarray(book_map)
+plt.imshow(a, interpolation='nearest')
+plt.show()
