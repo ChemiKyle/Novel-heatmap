@@ -9,7 +9,7 @@ def make_bookmap(book_text):
     line_map = re.split('[\.\?\!]', book_text)
 
     for line in line_map[:-1]: # Skip the last entry since it's a space after the final period
-        this_line_map = line.split(' ')
+        this_line_map = line.replace('"', '').replace(',','').replace(';','').replace("\n",'').split(' ')
         line_count_map = []
 
         for word in this_line_map:
@@ -31,13 +31,6 @@ def pad_vector_with_zeroes(book_map, longest_line):
             for i in range(longest_line - word_count):
                 line.append(0)
 
-def make_blank_pad_vector(longest_line):
-    pad_vector = []
-    for i in range(longest_line):
-        pad_vector.append(0)
-    return pad_vector
-
-make_image = True # Determines whether or not to plot the result
 directly_to_figure = True # Set to false to produce a preview first
 def numpy_image_maker(book_map, book_name):
     a = np.asarray(book_map)
@@ -51,6 +44,7 @@ def numpy_image_maker(book_map, book_name):
     else:
         plt.show()
 
+
 # Create a file with a matrix suitable for Octave/MATLAB
 make_matrix = False
 def matrix_maker(book_map, book_name):
@@ -58,7 +52,6 @@ def matrix_maker(book_map, book_name):
     a = np.transpose(a)
     np.savetxt(book_name + ".mat", a, newline=";\n")
 
-# def normalize_sizes(list_of_bookmaps):
 def process_to_dictionary(chosen_file, chapter_dict):
     book_name, ext = os.path.splitext(chosen_file)
     with open(chosen_file, 'r') as f:
@@ -68,21 +61,40 @@ def process_to_dictionary(chosen_file, chapter_dict):
     chapter_dict[book_name] = book_map
     pad_vector_with_zeroes(book_map, longest_line)
 
-
-    print(len(book_map))
+make_image = True # Determines whether or not to plot the result
 
 def process_chapters_to_images(chapter_dict):
     for i in chapter_dict:
         file_name = i
-        print(file_name)
         book_map = chapter_dict[i]
         numpy_image_maker(book_map, file_name)
 
-normalizing = False
+# Make a vector full of zeroes the size of the longest sentence, used to pad width
+def make_blank_pad_vector(longest_line):
+    pad_vector = []
+    for i in range(longest_line):
+        pad_vector.append(0)
+    return pad_vector
+
+normalizing = True
 def normalize_all_maps(chapter_dict):
+    longest_sentence = 0
+    most_sentences = 0
     for i in chapter_dict:
-        for j in chapter_dict[i]:
-            print(len(j))
+        this_sentence_count = len(chapter_dict[i])
+        if this_sentence_count > most_sentences:
+            most_sentences = this_sentence_count
+        this_longest_sentence = len(chapter_dict[i][0])
+        if this_longest_sentence > longest_sentence:
+            longest_sentence = this_longest_sentence
+
+    # pad_vector = make_blank_pad_vector(longest_sentence)
+    for i in chapter_dict:
+        pad_vector_with_zeroes(chapter_dict[i], longest_sentence) # Normalizes blank space to largest sentence (vertical)
+        # this_sentence_count = len(chapter_dict[i])
+        # for i in range(most_sentences - this_sentence_count):
+        #     chapter_dict[i].append(pad_vector)
+
 
 def main():
     chapter_dict = {}
