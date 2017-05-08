@@ -41,7 +41,7 @@ def numpy_image_maker(book_map, book_name):
     plt.axis('off')
 
     # Probably the most important value, this is the colormap
-    cmap = 'Blues_r'
+    cmap = 'viridis'
     # More info at: https://matplotlib.org/users/colormaps.html
 
     dpi = 100  # Default for this with direct write is 80, but images our size don't warrant compression
