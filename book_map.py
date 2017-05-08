@@ -36,7 +36,11 @@ def numpy_image_maker(book_map, book_name):
     a = np.asarray(book_map)
     a = np.transpose(a)
     plt.axis('off')
+
+    # Probably the most important value, this is the colormap
     cmap = 'Blues_r'
+    # More info at: https://matplotlib.org/users/colormaps.html
+
     dpi = 100 # Default for this with direct write is 80, but images our size don't warrant compression
     plt.imshow(a, cmap=cmap ,interpolation='nearest')
     if directly_to_figure:
@@ -46,7 +50,6 @@ def numpy_image_maker(book_map, book_name):
 
 
 # Create a file with a matrix suitable for Octave/MATLAB
-make_matrix = False
 def matrix_maker(book_map, book_name):
     a = np.asarray(book_map)
     a = np.transpose(a)
@@ -61,22 +64,12 @@ def process_to_dictionary(chosen_file, chapter_dict):
     chapter_dict[book_name] = book_map
     pad_vector_with_zeroes(book_map, longest_line)
 
-make_image = True # Determines whether or not to plot the result
-
 def process_chapters_to_images(chapter_dict):
     for i in chapter_dict:
         file_name = i
         book_map = chapter_dict[i]
         numpy_image_maker(book_map, file_name)
 
-# Make a vector full of zeroes the size of the longest sentence, used to pad width
-def make_blank_pad_vector(longest_line):
-    pad_vector = []
-    for i in range(longest_line):
-        pad_vector.append(0)
-    return pad_vector
-
-normalizing = True
 def normalize_all_maps(chapter_dict):
     longest_sentence = 0
     most_sentences = 0
@@ -88,15 +81,20 @@ def normalize_all_maps(chapter_dict):
         if this_longest_sentence > longest_sentence:
             longest_sentence = this_longest_sentence
 
-    # pad_vector = make_blank_pad_vector(longest_sentence)
-    for i in chapter_dict:
-        pad_vector_with_zeroes(chapter_dict[i], longest_sentence) # Normalizes blank space to largest sentence (vertical)
-        # this_sentence_count = len(chapter_dict[i])
-        # for i in range(most_sentences - this_sentence_count):
-        #     chapter_dict[i].append(pad_vector)
+    # Make a vector full of zeroes the size of the longest sentence, used to pad width
+    pad_vector = [0]*int(longest_sentence)
 
+    for i in chapter_dict:
+        pad_vector_with_zeroes(chapter_dict[i], longest_sentence) # Normalizes vertical space to largest sentence
+        for j in range(most_sentences - len(chapter_dict[i])): # Add blank vectors to normalize width
+            chapter_dict[i].append(pad_vector)
+#         TODO: Option to alternate between append and prepend to center heatmap
 
 def main():
+    normalizing = True # Pad images to make them the same size; increases computation time quite a bit
+    making_image = True # Determines whether or not to plot the result
+    making_matrix = False # Output a .mat file to use with Octave/MATLAB
+
     chapter_dict = {}
     file_list = tkinter.filedialog.askopenfilenames() # Supports processing multiple files sequentially
 
@@ -105,8 +103,10 @@ def main():
 
     if normalizing:
         normalize_all_maps(chapter_dict)
-    if make_image:
+    if making_image:
         process_chapters_to_images(chapter_dict)
+    if making_matrix
+
 
 if __name__ == "__main__":
     main()
