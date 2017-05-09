@@ -9,7 +9,12 @@ which was synthesized from the text of [this article about Vincent van Gogh.](ht
 
 It works by making a matrix of the sentences in the input file(s); each sentence is a vector and each number corresponds to the length of the word at its corresponding position.  
 i.e.: "The quick brown fox jumped over the lazy dog" becomes [3 5 5 3 6 4 3 4 3] and is represented thusly  
-![fox](/images/fox_map_image.png?raw=true "Example vector")
+![fox](/images/fox_map_image.png?raw=true "Example vector")  
+Processing a .txt file containing `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque laoreet convallis leo vitae dignissim. Nam et metus bibendum, scelerisque ex vel, rhoncus tortor.` would produce the following result:  
+![lore_impsum](/images/lorem_ipsum_example_map_image.png)  
+A paragraph of lorem ipsum would be presented:  
+![lorem_paragraph](/images/lorem_paragraph.png)
+
 
 # Workflow
 The images can be made by running `book_map.py` and selecting your file(s) via a tkinter GUI; there are various options within the code for things like "normalizing" the data when processing multiple files and outputting `.mat` files for use with other programs such as Octave.
