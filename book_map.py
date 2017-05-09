@@ -100,6 +100,8 @@ def normalize_all_maps(chapter_dict):
 
     for i in chapter_dict:
         pad_vector_with_zeroes(chapter_dict[i], longest_sentence)  # Normalizes vertical space to largest sentence
+        # Note that the above method makes ALL images the same height, so there is at times a significant amount of
+        # of whitespace underneath the longest sentence of each chapter
         for j in range(most_sentences - len(chapter_dict[i])):  # Add blank vectors to normalize width
             chapter_dict[i].append(pad_vector)
 
@@ -107,7 +109,7 @@ def normalize_all_maps(chapter_dict):
 #         TODO: Option to alternate between append and prepend to center heatmap
 
 def main():
-    normalizing = True  # Pad images to make them the same size; increases computation time quite a bit
+    normalizing = False  # Pad images to make them the same size; increases computation time quite a bit
     making_image = True  # Determines whether or not to plot the result
     making_matrix = False  # Output a .mat file to use with Octave/MATLAB
 
