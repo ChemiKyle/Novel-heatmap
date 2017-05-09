@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -85,6 +87,8 @@ def process_chapters_to_matrices(chapter_dict):
 
 
 def normalize_all_maps(chapter_dict):
+    normalizing_height = False  # Toggle for whether to normalize across all heights,
+    # Turning on can lead to unsightly excessive whitespace
     longest_sentence = 0
     most_sentences = 0
     for i in chapter_dict:
@@ -96,12 +100,13 @@ def normalize_all_maps(chapter_dict):
             longest_sentence = this_longest_sentence
 
     # Make a vector full of zeroes the size of the longest sentence, used to pad width
-    pad_vector = [0]*int(longest_sentence)
+    if normalizing_height:
+        pad_vector = [0]*int(longest_sentence)
 
     for i in chapter_dict:
-        pad_vector_with_zeroes(chapter_dict[i], longest_sentence)  # Normalizes vertical space to largest sentence
-        # Note that the above method makes ALL images the same height, so there is at times a significant amount of
-        # of whitespace underneath the longest sentence of each chapter
+        pad_vector_with_zeroes(chapter_dict[i], longest_sentence)
+        if not normalizing_height:
+            pad_vector = [0]*int(len(chapter_dict[i][0]))
         for j in range(most_sentences - len(chapter_dict[i])):  # Add blank vectors to normalize width
             chapter_dict[i].append(pad_vector)
 
