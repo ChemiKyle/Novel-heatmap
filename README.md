@@ -14,4 +14,8 @@ Creating an image works best with single chapters, so I also wrote a script to h
 For \*nix users, `autotrim.sh` can be used to remove whitespace from all images.
 
 # Normalization
-Multiple chapters (files) are "normalized" by adding 0's to the end of vectors until they match the length of the longest sentence. Each chapter is then normalized by length by adding 0 filled vectors until all matrices are the same size.
+Multiple chapters (files) are "normalized" by adding 0's to the end of vectors until they match the length of the longest sentence. Each chapter is then normalized by length by adding 0 filled vectors until all matrices are the same size.  
+Below is a comparison of **an extreme example** from processing and combining the first 5 chapters of Tolstoy's _What is Art?_ - which conveniently has a sentence-rich third chapter - with (left or top) and without (right or bottom) normalization.  
+![normalized](/images/what_is_art_normalized.png "normalized")
+![raw](/images/what_is_art_raw.png "raw")  
+(NB: These are not fully automated; both images were made by importing individual chapter images into inkscape, stacking and center aligning them. For the raw image I manually changed the color of the area outside of each respective matrix to match the color scheme to demonstrate the aesthetic intent of that setting.)
