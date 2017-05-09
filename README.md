@@ -10,7 +10,7 @@ which was synthesized from the text of [this article about Vincent van Gogh.](ht
 It works by making a matrix of the sentences in the input file(s); each sentence is a vector and each number corresponds to the length of the word at its corresponding position.  
 i.e.: "The quick brown fox jumped over the lazy dog" becomes [3 5 5 3 6 4 3 4 3] and is represented thusly  
 ![fox](/images/fox_map_image.png?raw=true "Example vector")  
-Processing a .txt file containing `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque laoreet convallis leo vitae dignissim. Nam et metus bibendum, scelerisque ex vel, rhoncus tortor.` would produce the following result:  
+Processing a .txt file containing `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque laoreet convallis leo vitae dignissim.` would produce the following result:  
 ![lore_impsum](/images/lorem_ipsum_example_map_image.png)  
 A paragraph of lorem ipsum would be presented:  
 ![lorem_paragraph](/images/lorem_paragraph.png)
